@@ -85,7 +85,7 @@ def main(env, policy_net, target_net, action_space):
         for i in count():
             probs = policy_net(state)
             if eps_decay(cnt) > random.random():
-                action = torch.tensor([random.randrange(0, 18)])
+                action = torch.tensor([random.randrange(0, action_space)])
             else:
                 action = torch.argmax(probs).view(1)
                 
@@ -132,7 +132,7 @@ def main(env, policy_net, target_net, action_space):
             if done:
                 episodes_duration.append(i+1)
                 rewards_episode.append(reward_episode)
-                print(f"step: {cnt} || reward episode: {reward_episode}")
+                print(f"Episode: {episode} || step: {cnt} || reward episode: {reward_episode}")
                 #plot_durations(episodes_duration)
                 break
                 
@@ -144,7 +144,7 @@ def main(env, policy_net, target_net, action_space):
 
 if __name__ == "__main__":
     
-    env = gym.make('BattleZone-v0')
+    env = gym.make('Breakout-v0')
     action_space = env.action_space.n # [0, 18] actions
     n_channel = 3
     state_dim = (210, 160, 3)
